@@ -8,9 +8,9 @@ if(isset($partes[1])){
                 $sql = mysqli_prepare($ligacao, $query3);
                 mysqli_stmt_bing_param($sql,'ssiii', $_POST["bugDescription"], date("Y m d"),0, $_POST["projId"],$_SESSION["id"]);
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => "Ola1");
+                    $msg = Array("error" => "false", "msg" => "Success");
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Ola2");
+                    $msg = Array("error" => "true", "msg" => "Unexpected error");
                 }
                 mysqli_stmt_close($sql);
             }
@@ -75,12 +75,5 @@ if(isset($partes[1])){
             
         default:
             $msg = Array("error" => "true", "msg" => "funcao desconhecida");
-    } 
-        
-        
-        
-        
-        
-        
-        
+    }   
 ?>
