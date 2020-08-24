@@ -3,7 +3,7 @@
 if(isset($partes[1])){
     switch($partes[1]){
         case "add":
-            if(isset($_POST["bugDescription"]) and isset($_POST["id"])){
+            if(isset($_POST["bugDescription"]) and isset($_SESSION["id"])){
                 $query3 = "INSERT INTO bug(description, DATEFound,solved, project, finder) VALUES (?,STR_TO_DATE(?, '%Y %m %d),?,?,?)";
                 $sql = mysqli_prepare($ligacao, $query3);
                 mysqli_stmt_bing_param($sql,'ssiii', $_POST["bugDescription"], date("Y m d"),0, $_POST["projId"],$_SESSION["id"]);
@@ -17,7 +17,7 @@ if(isset($partes[1])){
             break; 
             
         case "edit":
-            if(isset($_POST["bugDescription"]) and isset($_POST["idBug"]) and isset($_POST["id"])){
+            if(isset($_POST["bugDescription"]) and isset($_POST["idBug"]) and isset($_SESSION["id"])){
                 $query = "UPDATE bug SET description  = ? WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bing_param($sql,'si', $_POST["bugDescription"], $_POST["idBug"]);
@@ -31,7 +31,7 @@ if(isset($partes[1])){
             break;
         
         case "solve":
-            if(isset($_POST["idBug"]) and isset($_POST["id"])){
+            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
                 $query = "UPDATE bug SET solved = 1 WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bing_param($sql,'i', $_POST["idBug"]);
@@ -59,7 +59,7 @@ if(isset($partes[1])){
             break;
             
         case "check":
-            if(isset($_POST["idBug"]) and isset($_POST["id"])){
+            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
                 $query = "SELECT descripcion FROM bug WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao, $query);
                 mysqli_stmt_bing_param($sql,'i',$_POST["bugId"]);
