@@ -4,7 +4,7 @@ if(isset($partes[1])){
     switch($partes[1]){
         case "add":
             if(isset($_POST["bugDescription"]) and isset($_SESSION["id"])){
-                $query3 = "INSERT INTO bug(description, DATEFound,solved, project, finder) VALUES (?,STR_TO_DATE(?, '%Y %m %d),?,?,?)";
+                $query3 = "INSERT INTO bug(description, DATEFound,solved, project, finder) VALUES (?,STR_TO_DATE(?, '%Y %m %d'),?,?,?)";
                 $sql = mysqli_prepare($ligacao, $query3);
                 mysqli_stmt_bing_param($sql,'ssiii', $_POST["bugDescription"], date("Y m d"),0, $_POST["projId"],$_SESSION["id"]);
                 if(mysqli_stmt_execute($sql)){
