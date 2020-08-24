@@ -25,7 +25,7 @@ if(isset($partes[1])){
                     mysqli_stmt_execute($workerSQL);
                     $msg = Array("error" => "false", "msg" => "Project ". $_POST["projName"]." created");
                 }else{
-                    $msg = Array("error" => "true", "msg" => mysqli_stmt_error($insertSQL));
+                    $msg = Array("error" => "true", "msg" => "Unexpected error");
                 }   
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
@@ -87,7 +87,39 @@ if(isset($partes[1])){
                             $msg = Array("error" => "true", "msg" => "Project doesnt exist");
                         }
                     }else{
-                        $msg = Array("error" => "true", "msg" => "Access denied - only the owner can delete de project page");
+                        $msg = Array("error" => "true", "msg" => "Access denied - only the owner can delete the project page");
+                    }
+                }else{
+                    $msg = Array("error" => "true", "msg" => "Incomplete data");
+                }
+            }else{
+                $msg = Array("error" => "true", "msg" => "Access denied - login");
+            }
+        break;
+       
+        case 'terminate':
+            if(isset($_SESSION["id"])){
+                if(isset($_POST["projId"])){
+                    $idQuery = "SELECT idUser FROM projectworker WHERE idProject = ? AND type = 'owner'";
+                    $idSQL = mysqli_prepare($ligacao, $idQuery);
+                    mysqli_stmt_bind_param($idSQL, 'i', $_POST["projId"]);
+                    mysqli_stmt_execute($idSQL);
+                    mysqli_stmt_bind_result($idSQL, $id);
+                    mysqli_stmt_fetch($idSQL);
+                    mysqli_stmt_close($idSQL);
+                    if($id == $_SESSION["id"]){
+                        $query = "UPDATE project  SET terminated = 1 WHERE  idProject = ?";
+                        $sql = mysqli_prepare($ligacao, $query));
+                        mysqli_stmt_bind_param($sql, 'i', $_POST["projId"]);
+                        mysqli_stmt_execute($sql);
+                        mysqli_stmt_store_result($sql);
+                        if(mysqli_affected_rows($ligacao) > 0){
+                            $msg = Array("error" => "false", "msg" => "Success");
+                        }else{
+                            $msg = Array("error" => "true", "msg" => "Project doesnt exist");
+                        }
+                    }else{
+                        $msg = Array("error" => "true", "msg" => "Access denied - only the owner can terminate the project");
                     }
                 }else{
                     $msg = Array("error" => "true", "msg" => "Incomplete data");
