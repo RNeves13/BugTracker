@@ -64,7 +64,7 @@ if(isset($partes[1])){
 
         break;
         case 'role':
-            //unfinished - prrecisa de uma query para garantir que nao tas a trocar o coiso do owner, e provavelmente nao deixar admins mudar admins
+            //unfinished - precisa de uma query para garantir que nao tas a trocar o coiso do owner, e provavelmente nao deixar admins mudar admins
             if(isset($_SESSION["id"])){
                 if(isset($_POST["uId"]) and isset($_POST["projId"]) and isset($_POST['type'])){
                     $checkQuery = "SELECT type FROM projectworker WHERE userId = ? AND projId = ?";
