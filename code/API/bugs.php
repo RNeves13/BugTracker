@@ -45,7 +45,7 @@ if(isset($partes[1])){
             break;
         
         case "unsolve":
-            if(isset($_POST["idBug"]) and isset($_POST["id"])){
+            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
                 $query = "UPDATE bug SET solved = 0 WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bing_param($sql,'i', $_POST["idBug"]);
