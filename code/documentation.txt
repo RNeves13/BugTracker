@@ -1,0 +1,470 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Bug Tracker API
+  description: Place where project workers can keep track of bugs in the project
+servers: 
+   - url: no_clue_yet@noemail.com
+paths: 
+  /users/login:
+    post:
+      tags:
+        - user
+      summary: Logs the user in
+      parameters:
+        - name: uName
+          in: header
+          required : true
+          description: user name used on register
+          schema:
+            type: string
+        - name: pass
+          in: header
+          required: true
+          description: password used on resgister
+          schema:
+            type: string
+      responses: 
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: boolean
+                  msg:
+                    type: string
+   
+  /users/register:
+      post:
+        tags:
+            - user
+        summary: Register a new user
+        parameters:
+          - name: uName
+            in: header
+            required : true
+            description: user name used to login
+            schema:
+              type: string
+          - name: pass
+            in: header
+            required: true
+            description: password used to login
+            schema:
+              type: string
+          - name: email
+            in: header
+            required: true
+            description: email used for contact
+            schema:
+              type: string
+          - name: name
+            in: header
+            required: true
+            description: name presented on screen
+            schema:
+              type: string
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+
+  /users/logoff:
+      post:
+        tags:
+            - user
+        summary: log user off from the platform
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+
+  /projects/new:
+      post:
+        tags:
+            - project
+        summary: creates new project with current logged in user as owner
+        parameters:
+            - name: projName
+              in: header
+              required: true
+              description: name of the project
+              schema:
+                type: string
+            - name: projDesc
+              in: header
+              required: true
+              description: description of the project
+              schema:
+                type: string
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+   
+  /projects/edit:
+      post:
+        tags:
+            - project
+        summary: creates new project with current logged in user as owner
+        parameters:
+            - name: projId
+              in: header
+              required: true
+              description: ID of the project to change
+              schema:
+                type: integer
+            - name: newName
+              in: header
+              required: true
+              description: new name of the project
+              schema:
+                type: string
+            - name: projDesc
+              in: header
+              required: true
+              description: new description of the project
+              schema:
+                type: string
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+    
+  /projects/delete:
+      post:
+        tags:
+            - project
+        summary: deletes the project from the database
+        parameters:
+            - name: projId
+              in: header
+              required: true
+              description: ID of the project to delete
+              schema:
+                type: integer
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+    
+  /projects/terminate:
+      post:
+        tags:
+            - project
+        summary: deletes the project from the database
+        parameters:
+            - name: projId
+              in: header
+              required: true
+              description: ID of the project to mark as terminated
+              schema:
+                type: integer
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+                      
+                      
+  /bugs/add:
+      post:
+        tags:
+            - bug
+        summary: adds new bug entry to target project
+        parameters:
+            - name: title
+              in: header
+              required: true
+              description: title for the bug
+              schema:
+                type: string
+            - name: bugDescription
+              in: header
+              required: true
+              description: description of what the bug is
+              schema:
+                type: string
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+          
+  /bugs/edit:
+      post:
+        tags:
+            - bug
+        summary: adds new bug entry to target project
+        parameters:
+            - name: newTitle
+              in: header
+              required: true
+              description: new title for the bug
+              schema:
+                type: string
+            - name: newBugDescription
+              in: header
+              required: true
+              description: new description of what the bug is
+              schema:
+                type: string
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+  
+  /bugs/solve:
+      post:
+        tags:
+            - bug
+        summary: marks bug as solved
+        parameters:
+            - name: idBug
+              in: header
+              required: true
+              description: id of the bug to mark as solved
+              schema:
+                type: integer
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+                      
+  /bugs/unsolve:
+      post:
+        tags:
+            - bug
+        summary: marks bug as unsolved
+        parameters:
+            - name: idBug
+              in: header
+              required: true
+              description: id of the bug to mark as unsolved
+              schema:
+                type: integer
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string                   
+                      
+  /bugs/check:
+      post:
+        tags:
+            - bug
+        summary: get bug description
+        parameters:
+            - name: idBug
+              in: header
+              required: true
+              description: id of the bug to get description
+              schema:
+                type: integer
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+                    data: 
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        description:
+                          type: string
+                          
+  /workers/add:
+      post:
+        tags:
+            - worker
+        summary: adds a user as worker for a project
+        parameters:
+            - name: uId
+              in: header
+              required: true
+              description: the id of the user
+              schema:
+                type: integer
+            - name: projId
+              in: header
+              required: true
+              description: the id of the project
+              schema:
+                type: integer
+            - name: type
+              in: header
+              required: true
+              description: the role of the user
+              schema:
+                type: string
+                enum: ['admin', 'coder', 'tester']
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+                      
+  /workers/remove:
+      post:
+        tags:
+            - worker
+        summary: removes a user as worker for a project
+        parameters:
+            - name: uId
+              in: header
+              required: true
+              description: the id of the user
+              schema:
+                type: integer
+            - name: projId
+              in: header
+              required: true
+              description: the id of the project
+              schema:
+                type: integer
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+                      
+  /workers/role:
+      post:
+        tags:
+            - worker
+        summary:  changes the role of a user participating in the project
+        parameters:
+            - name: uId
+              in: header
+              required: true
+              description: the id of the user
+              schema:
+                type: integer
+            - name: projId
+              in: header
+              required: true
+              description: the id of the project
+              schema:
+                type: integer
+            - name: newType
+              in: header
+              required: true
+              description: the new role of the user
+              schema:
+                type: string
+                enum: ['admin', 'coder', 'tester']
+        responses: 
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: boolean
+                    msg:
+                      type: string
+                      
