@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `bugTracker`.`User` (
   `password` VARCHAR(256) NOT NULL,
   `email` VARCHAR(256) NOT NULL,
   `name` VARCHAR(60) NOT NULL,
-  `type` ENUM("admin", "basic", "develpor") NOT NULL,
+  `type` ENUM("admin", "basic", "developer") NOT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC),
   UNIQUE INDEX `userName_UNIQUE` (`userName` ASC),
